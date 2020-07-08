@@ -8,6 +8,5 @@ version: 0.0.2
 python_versions:
   - "2"
   - "3"
-#api-key: MGQ0NTU2Y2JkNjZiZTVhNTVhYWMxZTNkZDM5MjkwNzZiZGM1M2UxMWEzMTU4NjI1NmU4MGEzZTg4NTljYmU4NA
 author: Vmware, Inc.
 email: anandpatel@vmware.com

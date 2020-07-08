@@ -6,7 +6,7 @@ vars:
   - sources: null
 tasks:
   parsealert:
-      action: uem_stackstorm.parse-service-state-alert
+      action: uem_stackstorm.parse_service_state_alert
       input:
         alertBody: <% ctx().data %>
       next:

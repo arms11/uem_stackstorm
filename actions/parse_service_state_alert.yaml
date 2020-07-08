@@ -1,5 +1,5 @@
 ---
-name: "parse-service-state-alert"
+name: "parse_service_state_alert"
 description: "An action to parse service state alert JSON"
 runner_type: "python-script"
 entry_point: "parse_service_state_alert.py"
