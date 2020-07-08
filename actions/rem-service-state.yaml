@@ -1,0 +1,9 @@
+---
+name: rem-service-state
+description: An action to remediate service state alert
+runner_type: orquesta
+entry_point: workflows/rem-service-state-wf.yaml
+enabled: true
+parameters:
+  data:
+    required: true

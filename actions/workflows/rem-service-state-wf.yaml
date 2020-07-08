@@ -1,0 +1,18 @@
+version: 1.0
+description: A workflow to perform service state alert remediation
+input:
+  - data
+vars:
+  - sources: null
+tasks:
+  parsealert:
+      action: uem_stackstorm.parse-service-state-alert
+      input:
+        alertBody: <% ctx().data %>
+      next:
+      - when: <% succeeded() %>
+        publish: sources = <% result().result %>
+        do: task1
+
+  task1:
+      action: core.echo message= <% ctx().sources %>

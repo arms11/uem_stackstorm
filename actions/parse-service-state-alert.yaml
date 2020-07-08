@@ -1,0 +1,10 @@
+---
+name: "parse-service-state-alert"
+description: "An action to parse service state alert JSON"
+runner_type: "python-script"
+entry_point: "parse_service_state_alert.py"
+enabled: true
+parameters:
+  alertBody:
+    required: true
+    position: 0

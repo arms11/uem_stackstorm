@@ -1,0 +1,15 @@
+---
+    name: "rem-service-state"
+    pack: "uem_stackstorm"
+    description: "Rule to remediate service state alert"
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "service-start"
+
+    action:
+        ref: "uem_stackstorm.rem-service-state"
+        parameters: 
+            data: "{{ trigger.body }}"
