@@ -11,7 +11,8 @@ tasks:
         alertBody: <% ctx().data %>
       next:
       - when: <% succeeded() %>
-        publish: sources = <% result().result %>
+        publish: 
+          - sources = <% result().stdout %>
         do: task1
 
   task1:
