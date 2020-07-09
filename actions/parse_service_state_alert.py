@@ -9,6 +9,7 @@ class ParseServiceStateAlertAction(Action):
             print(alertBody)
             if isinstance(alertBody, unicode):
                 data = ast.literal_eval(alertBody)
+                print(data["failingSources"])
                 return (True, data["failingSources"])
 
             else:
