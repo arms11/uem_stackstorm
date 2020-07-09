@@ -16,4 +16,4 @@ tasks:
         do: task1
 
   task1:
-      action: core.echo message= <% ctx().sources[0] %>
+      action: core.echo message= <% ctx().sources %>
