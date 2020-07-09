@@ -13,7 +13,8 @@ tasks:
       - when: <% succeeded() %>
         publish: 
           - sources: <% result().stdout %>
-        do: task1
+        do: startservice
 
-  task1:
-      action: core.echo message= <% ctx().sources %>
+  startservice:
+      with: message in <% ctx().sources %>
+      action: core.echo message=<% item(message) %>
