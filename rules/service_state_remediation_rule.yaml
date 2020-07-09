@@ -10,6 +10,6 @@ trigger:
         url: "service-start"
 
 action:
-    ref: "uem_stackstorm.rem_service_state"
+    ref: "uem_stackstorm.remediate_service_state"
     parameters: 
         data: "{{ trigger.body }}"
