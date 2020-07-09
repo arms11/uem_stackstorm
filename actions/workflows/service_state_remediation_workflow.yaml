@@ -12,7 +12,7 @@ tasks:
       next:
       - when: <% succeeded() %>
         publish: 
-          - sources = <% result().stdout %>
+          - sources: <% result().stdout %>
         do: task1
 
   task1:
