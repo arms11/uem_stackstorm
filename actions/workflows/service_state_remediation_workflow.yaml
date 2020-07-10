@@ -19,4 +19,4 @@ tasks:
       with: <% ctx().sources %>
       action: core.echo 
       input:
-        message: "<% item().service_name %> service for <% ctx().host %> host in <% item().environment %> envt of <% item().datacenter %> DC will be re-started."
+        message: "<% item().service_name %> service for <% item().host %> host in <% item().environment %> envt of <% item().datacenter %> DC will be re-started."
