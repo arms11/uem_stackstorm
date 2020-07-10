@@ -17,4 +17,4 @@ tasks:
 
   startservice:
       with: <% ctx().sources %>
-      action: core.echo message=<% item() %>
+      action: core.echo message=<% item().host %> | <% item().datacenter %> | <% item().service_name %> | <% item().environment %>
