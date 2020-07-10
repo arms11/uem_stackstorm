@@ -5,15 +5,17 @@ from st2common.runners.base_action import Action
 
 class ParseServiceStateAlertAction(Action):
     def run(self, alertBody):
+        failingSources = []
         try:
             if isinstance(alertBody, unicode):
                 data = ast.literal_eval(alertBody)
-                print(data["failingSources"])
-                print(type(data["failingSources"]))
-                return (True, data["failingSources"])
+                failingSources = data["failingSources"]
+                print(failingSources)
+                return (True, failingSources)
             else:
                 print(type(alertBody))
-                return (True, ["Not able to parse"])
+                return (True, failingSources)
         except Exception as e:
-            return (False, 'Exception occurred: {ex}'.format(ex=str(e)))
+            print('Exception occurred: {ex}'.format(ex=str(e)))
+            return (False, failingSources)
         

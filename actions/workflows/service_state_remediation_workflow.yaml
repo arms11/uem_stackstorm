@@ -3,7 +3,7 @@ description: A workflow to perform service state alert remediation
 input:
   - data
 vars:
-  - sources: null
+  - sources: []
 tasks:
   parsealert:
       action: uem_stackstorm.parse_service_state_alert
@@ -16,5 +16,5 @@ tasks:
         do: startservice
 
   startservice:
-      with: message in <% ctx().sources %>
-      action: core.echo message=<% item(message) %>
+      with: <% ctx().sources %>
+      action: core.echo message=<% item() %>
