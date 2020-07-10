@@ -17,4 +17,6 @@ tasks:
 
   startservice:
       with: <% ctx().sources %>
-      action: core.echo message=<% item().host %> | <% item().datacenter %> | <% item().service_name %> | <% item().environment %>
+      action: core.echo 
+      input:
+        message: "<% item().service_name %> service for <% ctx().host %> host in <% item().environment %> envt of <% item().datacenter %> DC will be re-started."
