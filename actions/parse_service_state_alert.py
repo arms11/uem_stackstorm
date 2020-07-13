@@ -7,15 +7,17 @@ class ParseServiceStateAlertAction(Action):
     def run(self, alertBody):
         failingSources = []
         try:
-            if isinstance(alertBody, unicode):
-                data = ast.literal_eval(alertBody)
-                failingSources = data["failingSources"]
-                print(failingSources)
-                return (True, failingSources)
+            print(type(alertBody))
+            # Python3 has all strings as Str type and Unicode is not supported.
+            if sys.version_info[0] >= 3:
+                if isinstance(alertBody, str):
+                    data = ast.literal_eval(alertBody)
+                    failingSources = data["failingSources"]
             else:
-                print(type(alertBody))
-                return (True, failingSources)
+                if isinstance(alertBody, unicode):
+                    data = ast.literal_eval(alertBody)
+                    failingSources = data["failingSources"]
+            return (True, failingSources)
         except Exception as e:
             print('Exception occurred: {ex}'.format(ex=str(e)))
             return (False, failingSources)
-        
