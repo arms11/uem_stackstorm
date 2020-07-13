@@ -4,7 +4,7 @@ name: uem_stackstorm
 description: Pack to contain actions, rules, and sensors for UEM automation
 keywords:
     - uem
-version: 0.0.4
+version: 0.0.1
 python_versions:
   - "2"
   - "3"
