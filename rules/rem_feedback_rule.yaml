@@ -1,0 +1,24 @@
+---
+    name: "rem_feedback_rule"
+    pack: "uem_stackstorm"
+    description: "REM Instance Feedback Rule"
+    enabled: true
+    
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "rem-feedback"
+    
+    criteria:
+        trigger.body.rem_job_response_code:
+            type: "nequals"
+            pattern: "0"
+    
+    action:
+        ref: "uem_stackstorm.process_rem_feedback"
+        parameters: 
+            pd_target: "{{ trigger.body.rem_pd_target }}"
+            response_code: "{{ trigger.body.rem_job_response_code }}"
+            response_message: "{{ trigger.body.rem_job_response_message }}"
+            client_url: "{{ trigger.headers.Host }}"
+            job_params: "{{ trigger.body.rem_job_params }}"

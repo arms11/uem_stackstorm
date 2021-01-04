@@ -1,0 +1,59 @@
+version: 1.0
+description: Workflow to process tasks related to WF Alerts
+input:
+  - alert_name
+  - alert_description
+  - alert_severity
+  - alert_event_samples
+  - jira_metadata
+vars:
+  - sources: []
+  - targets: []
+
+output:
+  - final: <% ctx().sources %>
+
+tasks:
+  # Extracts Alert Event Samples to a Qualified Dictionary
+  getsources:
+    action: uem_stackstorm.logz_extract_event_samples
+    input:
+      samples: "<% ctx().alert_event_samples %>"
+    next:
+    - when: <% succeeded() %>
+      publish: 
+        - sources: <% result().result %>  # Parse all samples to create dictionary structure
+      do:
+        - initializedata
+  
+  # Maps source data with target metadata
+  initializedata:
+    with:
+      items: <% ctx().sources %>
+      concurrency: 1
+    action: uem_stackstorm.logz_initialize_jira
+    input:
+      alert_name: "<% ctx().alert_name %>"
+      alert_description: "<% ctx().alert_description %>"
+      alert_severity: "<% ctx().alert_severity %>"
+      metadata: "<% ctx().jira_metadata %>" 
+      source: "<% item() %>"
+    next:
+    - when: <% succeeded() %>
+      publish:
+        - targets: <% result().result %>
+      do:
+        - createjira
+  
+  # Creates issue for each target mapped from source
+  createjira:
+    with:
+      items: <% ctx().targets %>
+      concurrency: 1
+    action: uem_stackstorm.jira_create_issue
+    input:
+      project: "<% item().project %>"
+      type: "<% item().type %>"
+      summary: "<% item().summary %>"
+      description: "<% item().description %>"
+      custom_fields: "<% item().custom_fields %>"

@@ -1,0 +1,42 @@
+---
+  jenkins_url:
+    description: "FQDN to Jenkins API endpoint (e.x.: http://jenkins.mycompany.org:8080)"
+    type: "string"
+    secret: false
+    required: false
+  jenkins_username:
+    description: "Jenkins Username (if auth is enabled)"
+    type: "string"
+    secret: false
+    required: false
+  jenkins_password:
+    description: "Jenkins Password (if auth is enabled)"
+    type: "string"
+    secret: true
+    required: false
+  jenkins_api_token:
+    description: "Jenkins API token"
+    type: "string"
+    secret: true
+    required: false
+  jira_api_url:
+    description: "JIRA REST API Url (e.x.: https://jira-euc.eng.vmware.com/jira/rest/api/latest)" 
+    type: "string"
+    secret: false
+    required: false
+  jira_username:
+    description: "JIRA User Name"
+    type: "string"
+    secret: false
+    required: false
+  jira_password:
+    description: "JIRA Password"
+    type: "string"
+    secret: true
+    required: false
+  pagerduty_event_api_url:
+    description: "PagerDuty Events API Url"
+    type: "string"
+    secret: false
+    required: false
+    default: "https://events.pagerduty.com/v2/enqueue"

@@ -1,0 +1,10 @@
+---
+name: process_service_unavailable_alert
+description: An action to process service unavailable alert from logz.io
+runner_type: orquesta
+entry_point: workflows/service_unavailable_alert_workflow.yaml
+enabled: true
+parameters:
+  data:
+    type: object
+    required: true

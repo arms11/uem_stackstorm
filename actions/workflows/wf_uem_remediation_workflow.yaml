@@ -1,0 +1,63 @@
+version: 1.0
+description: Workflow to perform Jenkins based remediation for WF UEM Alerts
+input:
+  - alert_name
+  - alert_reason
+  - alert_url
+  - alert_data
+  - jenkins_metadata
+  - alert_notification_targets
+vars:
+  - sources: []
+  - job_params_list: []
+  - project: ""
+  - job_results: []
+tasks:
+  # Extracts Failing Sources
+  get_sources:
+    action: uem_stackstorm.parse_instance_alert
+    input:
+      alertBody: <% ctx().alert_data %>
+    next:
+    - when: <% succeeded() %>
+      publish: 
+        - sources: <% result().result %>  # Parse all failing sources to create dictionary structure
+      do:
+        - initialize_job_parameters
+
+  # Initialize Jenkins Job Parameters
+  initialize_job_parameters:
+    action: uem_stackstorm.wavefront_initialize_jenkins
+    input:
+      jenkins_metadata: "<% ctx().jenkins_metadata %>"
+      sources: "<% ctx().sources %>"
+    next:
+    - when: <% succeeded() %>
+      publish:
+        - job_params_list: <% result().result %>
+        - project: <% ctx(jenkins_metadata).get(project) %>
+      do:
+        - jenkins_build_job
+  
+  # Invokes Jenkins Job for All Failed Sources
+  jenkins_build_job:
+    action: uem_stackstorm.jenkins_build_job
+    input:
+      project: "<% ctx().project %>"
+      job_params_list: <% ctx().job_params_list %>
+    next:
+    - when: <% succeeded() and bool(int(ctx(alert_notification_targets).get(slack, []).len()) > 0) %>
+      publish:
+        - job_results: <% result().result %>
+      do:
+        - notify_slack
+
+  # Sends Slack Notifications Regarding Job Invocations
+  notify_slack:
+    action: uem_stackstorm.slack_prepare_rem_notifications
+    input:
+      alert_name: "<% ctx().alert_name %>"
+      alert_url: "<% ctx().alert_url %>"
+      rem_job: "<% ctx().project %>"
+      rem_job_results: "<% ctx().job_results %>"
+      targets: "<% ctx().alert_notification_targets.get(slack) %>"

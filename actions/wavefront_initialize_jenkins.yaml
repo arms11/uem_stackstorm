@@ -1,0 +1,16 @@
+---
+  name: wavefront_initialize_jenkins
+  description: Action to map source alert data to target jenkins job
+  runner_type: "python-script"
+  entry_point: "wavefront_initialize_jenkins.py"
+  enabled: true
+  parameters:
+    jenkins_metadata:
+      type: object
+      required: true
+      position: 0
+    sources:
+      # type: object
+      type: array
+      required: true
+      position: 1

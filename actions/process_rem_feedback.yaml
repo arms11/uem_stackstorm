@@ -1,0 +1,27 @@
+---
+    name: process_rem_feedback
+    description: Processes feedback from REM instance
+    runner_type: "python-script"
+    entry_point: process_rem_feedback.py
+    enabled: true
+    parameters:
+      pd_target:
+        type: string
+        required: true
+        position: 0
+      response_code:
+        type: string
+        required: true
+        position: 1
+      response_message:
+        type: string
+        required: true
+        position: 2
+      client_url:
+        type: string
+        required: true
+        position: 3
+      job_params:
+        type: array
+        required: true
+        position: 4

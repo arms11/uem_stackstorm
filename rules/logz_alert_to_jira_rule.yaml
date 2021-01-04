@@ -1,0 +1,24 @@
+---
+name: "logz_alert_to_jira_rule"
+pack: "uem_stackstorm"
+description: "Rule to automate JIRA from Logz.io alert"
+enabled: true
+
+trigger:
+    type: "core.st2.webhook"
+    parameters:
+        url: "logz-uem-alert"
+
+criteria:
+    trigger.body.jira_metadata:
+        type: "exists"
+        pattern : "True"
+
+action:
+    ref: "uem_stackstorm.process_logz_alert_to_jira"
+    parameters: 
+        alert_name: "{{ trigger.body.alert_title }}"
+        alert_description: "{{ trigger.body.alert_description }}"
+        alert_severity: "{{ trigger.body.alert_severity }}"
+        alert_event_samples: "{{ trigger.body.alert_event_samples }}"
+        jira_metadata: "{{ trigger.body.jira_metadata }}"

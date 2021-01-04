@@ -1,0 +1,27 @@
+---
+  name: slack_prepare_rem_notifications
+  description: Action to prepare REM notifications to Slack Channel(s)
+  runner_type: "python-script"
+  entry_point: "slack_prepare_rem_notifications.py"
+  enabled: true
+  parameters:
+    alert_name:
+      type: string
+      required: true
+      position: 0
+    alert_url:
+      type: string
+      required: true
+      position: 1
+    rem_job:
+      type: string
+      required: true
+      position: 2
+    rem_job_results:
+      type: array
+      required: true
+      position: 3
+    targets:
+      type: array
+      required: true
+      position: 4

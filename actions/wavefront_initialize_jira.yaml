@@ -1,0 +1,27 @@
+---
+  name: wavefront_initialize_jira
+  description: Action to map source alert data to target metadata
+  runner_type: "python-script"
+  entry_point: "wavefront_initialize_jira.py"
+  enabled: true
+  parameters:
+    alert_name:
+      type: string
+      required: true
+      position: 0
+    alert_severity:
+      type: string
+      required: true
+      position: 1
+    alert_url:
+      type: string
+      required: true
+      position: 2
+    metadata:
+      type: object
+      required: true
+      position: 3
+    source:
+      type: object
+      required: true
+      position: 4

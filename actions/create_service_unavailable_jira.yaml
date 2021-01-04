@@ -1,0 +1,12 @@
+---
+name: "create_service_unavailable_jira"
+description: "An action to create JIRA for service unavailable alert"
+runner_type: "python-script"
+entry_point: "create_service_unavailable_jira.py"
+enabled: true
+parameters:
+  alert_detail:
+    type: object
+    description: "Alert detail"
+    required: true
+    position: 0

@@ -1,0 +1,28 @@
+---
+name: "wf_alert_to_jira_rule"
+pack: "uem_stackstorm"
+description: "Rule to automate JIRA from wavefront alert"
+enabled: true
+
+trigger:
+    type: "core.st2.webhook"
+    parameters:
+        url: "wf-uem-alert"
+
+criteria:
+    trigger.body.alert_has_data:
+        type: ieq
+        pattern: ""
+    trigger.body.jira_metadata:
+        type: "exists"
+        pattern : "True"
+
+action:
+    ref: "uem_stackstorm.process_wf_alert_to_jira"
+    parameters: 
+        alert_name: "{{ trigger.body.alert_name }}"
+        alert_reason: "{{ trigger.body.alert_reason }}"
+        alert_severity: "{{ trigger.body.alert_severity }}"
+        alert_url: "{{ trigger.body.alert_url }}"
+        alert_data: "{{ trigger.body.alert_data }}"
+        jira_metadata: "{{ trigger.body.jira_metadata }}"

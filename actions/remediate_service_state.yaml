@@ -1,9 +1,0 @@
----
-name: remediate_service_state
-description: An action to remediate service state alert
-runner_type: orquesta
-entry_point: workflows/service_state_remediation_workflow.yaml
-enabled: true
-parameters:
-  data:
-    required: true

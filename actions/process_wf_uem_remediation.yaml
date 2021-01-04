@@ -1,0 +1,25 @@
+---
+name: process_wf_uem_remediation
+description: An action to initiate wavefront UEM remediation workflow
+runner_type: orquesta
+entry_point: workflows/wf_uem_remediation_workflow.yaml
+enabled: true
+parameters:
+  alert_name:
+    type: string
+    required: true
+  alert_reason:
+    type: string
+    required: true
+  alert_url:
+    type: string
+    required: true
+  alert_data:
+    type: object
+    required: true
+  jenkins_metadata:
+    type: object
+    required: true
+  alert_notification_targets:
+    type: object
+    required: true

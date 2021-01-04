@@ -1,0 +1,12 @@
+---
+name: "create_sproc_timeouts_jira"
+description: "An action to create JIRA for sproc timeouts alert"
+runner_type: "python-script"
+entry_point: "create_sproc_timeouts_jira.py"
+enabled: true
+parameters:
+  alert_detail:
+    type: object
+    description: "Alert detail"
+    required: true
+    position: 0

@@ -1,0 +1,57 @@
+version: 1.0
+description: Workflow to process tasks related to WF Alerts
+input:
+  - alert_name
+  - alert_reason
+  - alert_severity
+  - alert_url
+  - alert_data
+  - jira_metadata
+vars:
+  - sources: []
+  - targets: []
+tasks:
+  # Extracts Failing Sources to a Qualified Dictionary
+  getsources:
+    action: uem_stackstorm.parse_instance_alert
+    input:
+      alertBody: <% ctx().alert_data %>
+    next:
+    - when: <% succeeded() %>
+      publish: 
+        - sources: <% result().result %>  # Parse all failing sources to create dictionary structure
+      do:
+        - initializedata
+  
+  # Maps source data with target metadata
+  initializedata:
+    with:
+      items: <% ctx().sources %>
+      concurrency: 1
+    action: uem_stackstorm.wavefront_initialize_jira
+    input:
+      alert_name: "<% ctx().alert_name %>"
+      alert_severity: "<% ctx().alert_severity %>"
+      alert_url: "<% ctx().alert_url %>"
+      metadata: "<% ctx().jira_metadata %>" 
+      source: "<% item() %>"
+    next:
+    - when: <% succeeded() %>
+      publish:
+        - targets: <% result().result %>
+      do:
+        - createjira
+  
+  # Creates issue for each target mapped from source
+  createjira:
+    with:
+      items: <% ctx().targets %>
+      concurrency: 1
+    action: uem_stackstorm.jira_create_issue
+    input:
+      project: "<% item().project %>"
+      type: "<% item().type %>"
+      summary: "<% item().summary %>"
+      description: "<% item().description %>"
+      custom_fields: "<% item().custom_fields %>"
+  

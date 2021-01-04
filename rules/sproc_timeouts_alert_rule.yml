@@ -1,0 +1,24 @@
+---
+name: "sproc_timeouts_alert_rule"
+pack: "uem_stackstorm"
+description: "Rule for sproc timeouts alert related automation"
+enabled: true
+
+trigger:
+    type: "core.st2.webhook"
+    parameters:
+        url: "logz-sre-alert"
+
+criteria:
+    trigger.body.alert_title:
+        type: "iequals"
+        pattern : "Sprocs with Most Timeouts Detected"
+
+action:
+    ref: "uem_stackstorm.process_sproc_timeouts_alert"
+    parameters: 
+        title: "{{ trigger.body.alert_title }}"
+        description: "{{ trigger.body.alert_description }}"
+        severity: "{{ trigger.body.alert_severity }}"
+        event_data: "{{ trigger.body.alert_event_samples }}"
+        mappings: "{{ st2kv.system.sproc_schema_project_map | from_json_string }}"

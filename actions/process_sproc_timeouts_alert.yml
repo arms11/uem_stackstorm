@@ -1,0 +1,27 @@
+---
+name: process_sproc_timeouts_alert
+description: An action to process sproc timeouts alert from logz.io
+runner_type: "python-script"
+entry_point: process_sproc_timeouts_alert.py
+enabled: true
+parameters:
+  title:
+    type: string
+    required: true
+    position: 0
+  description:
+    type: string
+    required: true
+    position: 1
+  severity:
+    type: string
+    required: true
+    position: 2
+  event_data:
+    type: string
+    required: true
+    position: 3
+  mappings:
+    type: object
+    required: true
+    position: 4

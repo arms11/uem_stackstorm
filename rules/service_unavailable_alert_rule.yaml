@@ -1,0 +1,15 @@
+---
+name: "service_unavailable_alert_rule"
+pack: "uem_stackstorm"
+description: "Rule for service unavailable alert related automation"
+enabled: true
+
+trigger:
+    type: "core.st2.webhook"
+    parameters:
+        url: "service-unavailable-alert"
+
+action:
+    ref: "uem_stackstorm.process_service_unavailable_alert"
+    parameters: 
+        data: "{{ trigger.body }}"

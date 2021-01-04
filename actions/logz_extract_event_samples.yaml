@@ -1,0 +1,11 @@
+---
+name: "logz_extract_event_samples"
+description: "An action to parse logz alert's alert_event_samples"
+runner_type: "python-script"
+entry_point: "logz_extract_event_samples.py"
+enabled: true
+parameters:
+  samples:
+    type: string
+    required: true
+    position: 0

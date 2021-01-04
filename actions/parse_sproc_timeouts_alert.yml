@@ -1,0 +1,10 @@
+---
+name: "parse_sproc_timeouts_alert"
+description: "An action to parse instance based alert JSON"
+runner_type: "python-script"
+entry_point: "parse_sproc_timeouts_alert.py"
+enabled: true
+parameters:
+  alertBody:
+    required: true
+    position: 0

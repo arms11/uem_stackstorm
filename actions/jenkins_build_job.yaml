@@ -1,0 +1,17 @@
+---
+name: jenkins_build_job
+runner_type: python-script
+description: "Kick off Jenkins Build Jobs"
+enabled: true
+entry_point: "jenkins_build_job.py"
+parameters:
+  project:
+    type: string
+    description: "Project to build in Jenkins"
+    required: true
+    position: 0
+  job_params_list:
+    # type: object
+    type: array
+    description: "List of optional parameters for build in JSON format"
+    position: 1

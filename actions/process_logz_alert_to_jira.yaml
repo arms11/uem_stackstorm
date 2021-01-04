@@ -1,0 +1,22 @@
+---
+name: process_logz_alert_to_jira
+description: An action to intitate workflow to automate JIRA from Logz.io alert
+runner_type: orquesta
+entry_point: workflows/logz_alert_to_jira_workflow.yaml
+enabled: true
+parameters:
+  alert_name:
+    type: string
+    required: true
+  alert_description:
+    type: string
+    required: true
+  alert_severity:
+    type: string
+    required: true
+  alert_event_samples:
+    type: string
+    required: true
+  jira_metadata:
+    type: object
+    required: true

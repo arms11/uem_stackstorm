@@ -1,0 +1,31 @@
+---
+name: "wf_uem_remediation_rule"
+pack: "uem_stackstorm"
+description: "Rule to remediate UEM alert by REM Instance of Jenkins"
+enabled: true
+
+trigger:
+    type: "core.st2.webhook"
+    parameters:
+        url: "wf-uem-remediation"
+
+criteria:
+    trigger.body.alert_has_data:
+        type: "ieq"
+        pattern: ""
+    trigger.body.jenkins_metadata:
+        type: "exists"
+        pattern : "True"
+    trigger.body.jenkins_metadata.project:
+        type: "nequals"
+        pattern: ""
+
+action:
+    ref: "uem_stackstorm.process_wf_uem_remediation"
+    parameters: 
+        alert_name: "{{ trigger.body.alert_name }}"
+        alert_reason: "{{ trigger.body.alert_reason }}"
+        alert_url: "{{ trigger.body.alert_url }}"
+        alert_data: "{{ trigger.body.alert_data }}"
+        jenkins_metadata: "{{ trigger.body.jenkins_metadata }}"
+        alert_notification_targets: "{{ trigger.body.alert_notification_targets }}"

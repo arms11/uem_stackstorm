@@ -1,0 +1,32 @@
+version: 1.0
+description: A workflow to process service unavailable alert from logz
+input:
+  - data
+vars:
+  - alert_detail: {}
+
+tasks:
+  parsealert:
+      action: uem_stackstorm.parse_service_unavailable_alert
+      input:
+        alertBody: <% ctx().data %>
+      next:
+      - when: <% succeeded() %>
+        publish: 
+          - alert_detail: <% result().result %>
+        do: createjira
+
+  createjira:
+      action: uem_stackstorm.create_service_unavailable_jira
+      input:
+        alert_detail: "<% ctx().alert_detail %>"
+      next:
+      - when: <% succeeded() %>
+        publish: 
+          - alert_detail: <% result().result %>
+        do: notifypager
+  
+  notifypager:
+      action: core.noop
+
+  

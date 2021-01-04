@@ -1,0 +1,27 @@
+---
+  name: jira_create_issue
+  description: Action to create a JIRA issue
+  runner_type: "python-script"
+  entry_point: "jira_create_issue.py"
+  enabled: true
+  parameters:
+    project:
+      type: string
+      required: true
+      position: 0
+    type:
+      type: string
+      required: true
+      position: 1
+    summary:
+      type: string
+      required: true
+      position: 2
+    description:
+      type: string
+      required: true
+      position: 3
+    custom_fields:
+      type: object
+      required: true
+      position: 4

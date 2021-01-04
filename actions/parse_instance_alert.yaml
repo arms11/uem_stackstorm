@@ -1,0 +1,11 @@
+---
+name: "parse_instance_alert"
+description: "An action to parse instance based alert JSON"
+runner_type: "python-script"
+entry_point: "parse_instance_alert.py"
+enabled: true
+parameters:
+  alertBody:
+    type: object
+    required: true
+    position: 0

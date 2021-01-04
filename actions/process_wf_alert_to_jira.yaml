@@ -1,0 +1,25 @@
+---
+name: process_wf_alert_to_jira
+description: An action to intitate workflow to automate JIRA from WF alert
+runner_type: orquesta
+entry_point: workflows/wf_alert_to_jira_workflow.yaml
+enabled: true
+parameters:
+  alert_name:
+    type: string
+    required: true
+  alert_reason:
+    type: string
+    required: true
+  alert_severity:
+    type: string
+    required: true
+  alert_url:
+    type: string
+    required: true
+  alert_data:
+    type: object
+    required: true
+  jira_metadata:
+    type: object
+    required: true
